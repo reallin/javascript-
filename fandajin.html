@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>放大镜</title>
+   <style type="text/css">
+   * {
+            margin: 0;
+            padding: 0
+        }
+   #demo{
+   	display: block;
+            width: 400px;
+            height: 255px;
+            margin: 50px;
+            position: relative;
+            border: 1px solid #ccc;
+   }
+   		#small{
+   			position: relative;
+   			z-index: 1;
+   		}
+   		#mark{
+   			display: none;
+            width: 160px;
+            height: 120px;
+            position: absolute;
+            background: #ffffcc;
+            border: 1px solid #ccc;
+            filter: alpha(opacity=50);
+            opacity: 0.5;
+   		}
+   		#front{
+   			  position: absolute;
+            display: block;
+            width: 400px;
+            height: 255px;
+            background-color: #fff;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            z-index: 10;
+   		}
+   		#large{
+   			  display: none;
+            position: absolute;
+            top: 0;
+            left: 460px;
+            width: 400px;
+            height: 300px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            z-index: 1;;
+   		}
+   		#large img {
+            position: absolute;
+            z-index: 5
+        }
+   </style>
+   <script type="text/javascript">
+	window.onload = function(){
+		var small = document.getElementById("small");
+		var large = document.getElementById("large");
+		var mark = document.getElementById("mark");
+		var demo = document.getElementById("demo");
+		var front = document.getElementById("front");
+		var objBigBoxImage = large.getElementsByTagName("img")[0];
+
+		 front.onmouseover = function () {
+                mark.style.display = "block"
+                large.style.display = "block"
+            }
+		 front.onmouseout = function () {
+                mark.style.display = "none"
+                large.style.display = "none"
+            }
+        front.onmousemove = function(ev){
+         	var _event = ev||window.event;
+         	var left = _event.clientX - demo.offsetLeft-small.offsetLeft-mark.offsetWidth/2;
+         	var top = _event.clientY - demo.offsetTop - small.offsetTop - mark.offsetHeight/2;
+         	if(left < 0){
+         		left = 0;
+         	}else if(left > front.offsetWidth-mark.offsetWidth){
+         		left =  front.offsetWidth-mark.offsetWidth;
+         	}
+         	if(top < 0){
+         		top = 0;
+         	}else if(top > front.offsetHeight-mark.offsetHeight){
+         		top =  front.offsetHeight-mark.offsetHeight;
+         	}
+         	mark.style.left = left+"px";
+         	mark.style.top = top+"px";
+         	 var percentX = left / (front.offsetWidth - mark.offsetWidth);
+                var percentY = top / (front.offsetHeight - mark.offsetHeight);
+
+                objBigBoxImage.style.left = -percentX * (objBigBoxImage.offsetWidth - large.offsetWidth) + "px";
+                objBigBoxImage.style.top = -percentY * (objBigBoxImage.offsetHeight - large.offsetHeight) + "px";
+               
+         }
+
+	}
+	
+	</script>
+   </head>
+   <body>
+   <div id="demo">
+<div id="small">
+	<div id="mark"></div>
+	<div id="front"></div>
+	<img src="2.jpg"/>
+	
+</div>
+<div id = "large">
+	<img src="1.jpg"/>
+</div>
+</div>
+</body>
+	
+</html>
