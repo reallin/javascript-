@@ -1,4 +1,4 @@
-# javascript-
+# javascript_picturezoom
 利用javascript实现类似淘宝商品放大的那种效果。
 ##先看下效果图
 ![](https://github.com/reallin/javascript-/blob/master/zoom.png)
